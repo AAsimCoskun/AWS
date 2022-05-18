@@ -24,25 +24,26 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: 0.0.0.0/0 
+          CidrIp: 0.0.0.0/0
+
   WebServerHost:
-   Type: AWS::EC2::Instance
-   Properties: 
-    ImageId: ami-0022f774911c1d690
-    InstanceType: t2.micro
-    KeyName: Firstkey
-    SecurityGroupIds: 
-      - !Ref WebServerSecurityGroup
-   Tags: 
-    - Key: Name
-    - Value: !Sub Web server Of ${AWS::Stackname} Stack 
-    UserData: 
-         Fn::Base64:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0022f774911c1d690
+      InstanceType: t2.micro
+      KeyName: firstkey
+      SecurityGroupIds:
+        - !Ref WebServerSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub Web Server of ${AWS::StackName} Stack
+      UserData: 
+        Fn::Base64:
           !Sub |
             #! /bin/bash
             yum update -y
             yum install httpd -y
-            FOLDER="https://raw.githubusercontent.com/XXXXXXXXXXXX/my-projects/main/aws/projects/Project-101-kittens-carousel-static-website-ec2/static-web"
+            FOLDER="https://raw.githubusercontent.com/AAsimCoskun/AWS/master/aws/projects/Project-101-kittens-carousel-static-website-ec2/static-web"
             cd /var/www/html
             wget $FOLDER/index.html
             wget $FOLDER/cat0.jpg
@@ -50,11 +51,11 @@ Resources:
             wget $FOLDER/cat2.jpg
             wget $FOLDER/cat3.png
             systemctl start httpd
-            systemctl enable httpd
+            systemctl enable httpd      
+
 Outputs:
-  Websiteurl:
-   value : !Sub 
-    - http://${PublicAddress}
-    - PublicAddress: !GetAtt WebServerHost.puplicDnsName
-   Description: Kitten Carausel Application URL 
-     
+  WebsiteURL:
+    Value: !Sub
+      - http://${PublicAddress}
+      - PublicAddress: !GetAtt WebServerHost.PublicDnsName
+    Description: Kittens Carousel Application URL
