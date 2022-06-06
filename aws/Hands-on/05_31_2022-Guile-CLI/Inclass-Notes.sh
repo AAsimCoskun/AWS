@@ -116,3 +116,6 @@ sudo ./aws/install
 
 # Update the path accordingly if needed
 export PATH=$PATH:/usr/local/bin/aws
+
+
+https://awscli.amazonaws.com/v2/documentation/api/latest/index.html # source all amazon CLI command 
